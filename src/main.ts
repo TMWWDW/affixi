@@ -153,7 +153,3 @@ class CaseSuffix {
     return suffix;
   }
 }
-
-let suffix = new CaseSuffix();
-let w = suffix.case(Case.Instrumental).of("Ali", true);
-console.log(w);

@@ -148,6 +148,3 @@ var CaseSuffix = /** @class */ (function () {
     CaseSuffix.Vowels = __spreadArrays(CaseSuffix.UnroundedVowels, CaseSuffix.RoundedVowels);
     return CaseSuffix;
 }());
-var suffix = new CaseSuffix();
-var w = suffix["case"](Case.Instrumental).of("Ali", true);
-console.log(w);
