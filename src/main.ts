@@ -56,14 +56,14 @@ class CaseSuffix {
     return result;
   }
 
-  private static UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"];
-  private static UnroundedVowels = ["o", "u", "ö", "ü"];
-  private static RoundedVowels = ["a", "ı", "e", "i"];
-  private static BackVowels = ["e", "i", "ö", "ü"];
-  private static FrontVowels = ["a", "ı", "o", "u"];
-  private static Vowels = [...CaseSuffix.UnroundedVowels, ...CaseSuffix.RoundedVowels];
+  static UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"];
+  static UnroundedVowels = ["o", "u", "ö", "ü"];
+  static RoundedVowels = ["a", "ı", "e", "i"];
+  static BackVowels = ["e", "i", "ö", "ü"];
+  static FrontVowels = ["a", "ı", "o", "u"];
+  static Vowels = [...CaseSuffix.UnroundedVowels, ...CaseSuffix.RoundedVowels];
 
-  private static GetLastComponents(word: string) {
+  static GetLastComponents(word: string) {
     let input = word
       .split("")
       .reverse()
