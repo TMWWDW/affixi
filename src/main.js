@@ -5,24 +5,175 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             r[k] = a[j];
     return r;
 };
-var Case;
-(function (Case) {
-    /** İsmin Yalın Hâli */
-    Case[Case["Absolute"] = 0] = "Absolute";
-    /** İsmin Belirtme Hâli */
-    Case[Case["Accusative"] = 1] = "Accusative";
-    /** İsmin Ayrılma Hâli */
-    Case[Case["Ablative"] = 2] = "Ablative";
-    /** İsmin Bulunma Hâli */
-    Case[Case["Locative"] = 3] = "Locative";
-    /** İsmin Vasıta Hâli */
-    Case[Case["Instrumental"] = 4] = "Instrumental";
-    /** İsmin Yönelme Hâli */
-    Case[Case["Dative"] = 5] = "Dative";
-})(Case || (Case = {}));
+var Types;
+(function (Types) {
+    var Case;
+    (function (Case) {
+        /** İsmin Yalın Hâli */
+        Case[Case["Absolute"] = 0] = "Absolute";
+        /** İsmin Belirtme Hâli */
+        Case[Case["Accusative"] = 1] = "Accusative";
+        /** İsmin Ayrılma Hâli */
+        Case[Case["Ablative"] = 2] = "Ablative";
+        /** İsmin Bulunma Hâli */
+        Case[Case["Locative"] = 3] = "Locative";
+        /** İsmin Vasıta Hâli */
+        Case[Case["Instrumental"] = 4] = "Instrumental";
+        /** İsmin Yönelme Hâli */
+        Case[Case["Dative"] = 5] = "Dative";
+    })(Case = Types.Case || (Types.Case = {}));
+    var Pronoun;
+    (function (Pronoun) {
+        /** Birinci Tekil Şahıs */
+        Pronoun[Pronoun["SingularFirst"] = 0] = "SingularFirst";
+        /** İkinci Tekil Şahıs */
+        Pronoun[Pronoun["SingularSecond"] = 1] = "SingularSecond";
+        /** Üçüncü Tekil Şahıs */
+        Pronoun[Pronoun["SingularThird"] = 2] = "SingularThird";
+        /** Birinci Çoğul Şahıs */
+        Pronoun[Pronoun["PluralFirst"] = 3] = "PluralFirst";
+        /** İkinci Çoğul Şahıs */
+        Pronoun[Pronoun["PluralSecond"] = 4] = "PluralSecond";
+        /** Üçüncü Çoğul Şahıs */
+        Pronoun[Pronoun["PluralThird"] = 5] = "PluralThird";
+    })(Pronoun = Types.Pronoun || (Types.Pronoun = {}));
+})(Types || (Types = {}));
+var Sounds = /** @class */ (function () {
+    function Sounds() {
+    }
+    Sounds.UnvoicedStopConsonants = ["p", "ç", "t", "k"];
+    Sounds.VoicedStopConsonants = ["b", "c", "d", "ğ"];
+    Sounds.UnvoicedContinuousConsonants = ["f", "s", "ş", "h"];
+    Sounds.UnvoicedConsonants = __spreadArrays(Sounds.UnvoicedContinuousConsonants, Sounds.UnvoicedStopConsonants);
+    Sounds.RoundedVowels = ["o", "u", "ö", "ü"];
+    Sounds.UnroundedVowels = ["a", "ı", "e", "i"];
+    Sounds.BackVowels = ["e", "i", "ö", "ü"];
+    Sounds.FrontVowels = ["a", "ı", "o", "u"];
+    Sounds.Vowels = __spreadArrays(Sounds.FrontVowels, Sounds.BackVowels);
+    return Sounds;
+}());
+var Word = /** @class */ (function () {
+    function Word() {
+    }
+    Word.GetLastComponents = function (word) {
+        var input = word
+            .split("")
+            .reverse()
+            .join("");
+        var index = 0;
+        var letter = input[0];
+        var vowel = input[index];
+        while (!Sounds.Vowels.includes(vowel)) {
+            index++;
+            vowel = input[index];
+        }
+        return { letter: letter, vowel: vowel };
+    };
+    Word.GetSyllableCount = function (word) {
+        var count = 0;
+        var input = word.split("");
+        input.forEach(function (letter) {
+            if (Sounds.Vowels.includes(letter.toLowerCase()))
+                count += 1;
+        });
+        return count;
+    };
+    return Word;
+}());
+var PossessiveSuffix = /** @class */ (function () {
+    function PossessiveSuffix() {
+        this.pronoun = Types.Pronoun.SingularFirst;
+    }
+    PossessiveSuffix.prototype["case"] = function (pronoun) {
+        this.pronoun = pronoun;
+        return this;
+    };
+    PossessiveSuffix.prototype.of = function (word, isProperNoun) {
+        if (isProperNoun === void 0) { isProperNoun = false; }
+        var result = "";
+        var suffix = "";
+        if (isProperNoun)
+            suffix += "'";
+        suffix += this.suffix(word);
+        var letter = Word.GetLastComponents(word).letter;
+        if (Word.GetSyllableCount(word) > 1 &&
+            Sounds.UnvoicedStopConsonants.includes(letter) &&
+            this.pronoun !== Types.Pronoun.PluralThird) {
+            var i = Sounds.UnvoicedStopConsonants.indexOf(word[word.length - 1]);
+            var voicedCounterPart = Sounds.VoicedStopConsonants[i];
+            word =
+                word
+                    .split("")
+                    .splice(0, word.length - 1)
+                    .join("") + voicedCounterPart;
+        }
+        result = word + suffix;
+        return result;
+    };
+    PossessiveSuffix.prototype.suffix = function (word) {
+        var _a = Word.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
+        var suffix = "";
+        if (!Sounds.Vowels.includes(letter) && this.pronoun !== Types.Pronoun.PluralThird) {
+            if (Sounds.FrontVowels.includes(vowel)) {
+                suffix += "ı";
+            }
+            else if (Sounds.BackVowels.includes(vowel)) {
+                suffix += "i";
+            }
+        }
+        switch (this.pronoun) {
+            case 0:
+                suffix += "m";
+                break;
+            case 1:
+                suffix += "n";
+                break;
+            case 2:
+                if (Sounds.Vowels.includes(letter)) {
+                    suffix += "s";
+                    if (Sounds.FrontVowels.includes(vowel)) {
+                        suffix += "ı";
+                    }
+                    else if (Sounds.BackVowels.includes(vowel)) {
+                        suffix += "i";
+                    }
+                }
+                break;
+            case 3:
+                if (Sounds.FrontVowels.includes(vowel)) {
+                    suffix += "mız";
+                }
+                else if (Sounds.BackVowels.includes(vowel)) {
+                    suffix += "miz";
+                }
+                break;
+            case 4:
+                if (Sounds.FrontVowels.includes(vowel)) {
+                    suffix += "nız";
+                }
+                else if (Sounds.BackVowels.includes(vowel)) {
+                    suffix += "niz";
+                }
+                break;
+            case 5:
+                if (Sounds.FrontVowels.includes(vowel)) {
+                    suffix += "ları";
+                }
+                else if (Sounds.BackVowels.includes(vowel)) {
+                    suffix += "leri";
+                }
+                break;
+        }
+        return suffix;
+    };
+    return PossessiveSuffix;
+}());
+var p = new PossessiveSuffix();
+var r = p["case"](Types.Pronoun.PluralThird).of("Edep");
+console.log(r);
 var CaseSuffix = /** @class */ (function () {
     function CaseSuffix() {
-        this.type = Case.Absolute;
+        this.type = Types.Case.Absolute;
     }
     CaseSuffix.prototype["case"] = function (type) {
         this.type = type;
@@ -35,59 +186,45 @@ var CaseSuffix = /** @class */ (function () {
         if (isProperNoun)
             suffix += "'";
         switch (this.type) {
-            case Case.Absolute:
+            case Types.Case.Absolute:
                 result = this.absolute(word);
                 break;
-            case Case.Accusative:
+            case Types.Case.Accusative:
                 suffix += this.accusative(word);
                 result = word + suffix;
                 break;
-            case Case.Ablative:
+            case Types.Case.Ablative:
                 suffix += this.ablative(word);
                 result = word + suffix;
                 break;
-            case Case.Locative:
+            case Types.Case.Locative:
                 suffix += this.locative(word);
                 result = word + suffix;
                 break;
-            case Case.Instrumental:
+            case Types.Case.Instrumental:
                 suffix += this.instrumental(word);
                 result = word + suffix;
                 break;
-            case Case.Dative:
+            case Types.Case.Dative:
                 suffix += this.dative(word);
                 result = word + suffix;
                 break;
         }
         return result;
     };
-    CaseSuffix.GetLastComponents = function (word) {
-        var input = word
-            .split("")
-            .reverse()
-            .join("");
-        var index = 0;
-        var letter = input[0];
-        var vowel = input[index];
-        while (!CaseSuffix.Vowels.includes(vowel)) {
-            index++;
-            vowel = input[index];
-        }
-        return { letter: letter, vowel: vowel };
-    };
     CaseSuffix.prototype.absolute = function (word) {
         return word;
     };
     CaseSuffix.prototype.accusative = function (word) {
-        var _a = CaseSuffix.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
+        var _a = Word.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
         var suffix = "";
-        if (CaseSuffix.Vowels.includes(letter)) {
+        if (Sounds.Vowels.includes(letter)) {
             suffix += "y";
         }
-        if (CaseSuffix.FrontVowels.includes(vowel)) {
+        if (Sounds.FrontVowels.includes(vowel)) {
             suffix += "ı";
         }
-        else if (CaseSuffix.BackVowels.includes(vowel)) {
+        else if (Sounds.BackVowels.includes(vowel)) {
             suffix += "i";
         }
         return suffix;
@@ -96,55 +233,49 @@ var CaseSuffix = /** @class */ (function () {
         return this.locative(word) + "n";
     };
     CaseSuffix.prototype.locative = function (word) {
-        var _a = CaseSuffix.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
+        var _a = Word.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
         var suffix = "";
-        if (CaseSuffix.UnvoicedConsonants.includes(letter)) {
+        if (Sounds.UnvoicedConsonants.includes(letter)) {
             suffix += "t";
         }
         else {
             suffix += "d";
         }
-        if (CaseSuffix.FrontVowels.includes(vowel)) {
+        if (Sounds.FrontVowels.includes(vowel)) {
             suffix += "a";
         }
-        else if (CaseSuffix.BackVowels.includes(vowel)) {
+        else if (Sounds.BackVowels.includes(vowel)) {
             suffix += "e";
         }
         return suffix;
     };
     CaseSuffix.prototype.instrumental = function (word) {
-        var _a = CaseSuffix.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
+        var _a = Word.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
         var suffix = "";
-        if (CaseSuffix.Vowels.includes(letter)) {
+        if (Sounds.Vowels.includes(letter)) {
             suffix += "y";
         }
-        if (CaseSuffix.FrontVowels.includes(vowel)) {
+        if (Sounds.FrontVowels.includes(vowel)) {
             suffix += "la";
         }
-        else if (CaseSuffix.BackVowels.includes(vowel)) {
+        else if (Sounds.BackVowels.includes(vowel)) {
             suffix += "le";
         }
         return suffix;
     };
     CaseSuffix.prototype.dative = function (word) {
-        var _a = CaseSuffix.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
+        var _a = Word.GetLastComponents(word), letter = _a.letter, vowel = _a.vowel;
         var suffix = "";
-        if (CaseSuffix.Vowels.includes(letter)) {
+        if (Sounds.Vowels.includes(letter)) {
             suffix += "y";
         }
-        if (CaseSuffix.FrontVowels.includes(vowel)) {
+        if (Sounds.FrontVowels.includes(vowel)) {
             suffix += "a";
         }
-        else if (CaseSuffix.BackVowels.includes(vowel)) {
+        else if (Sounds.BackVowels.includes(vowel)) {
             suffix += "e";
         }
         return suffix;
     };
-    CaseSuffix.UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"];
-    CaseSuffix.UnroundedVowels = ["o", "u", "ö", "ü"];
-    CaseSuffix.RoundedVowels = ["a", "ı", "e", "i"];
-    CaseSuffix.BackVowels = ["e", "i", "ö", "ü"];
-    CaseSuffix.FrontVowels = ["a", "ı", "o", "u"];
-    CaseSuffix.Vowels = __spreadArrays(CaseSuffix.UnroundedVowels, CaseSuffix.RoundedVowels);
     return CaseSuffix;
 }());
