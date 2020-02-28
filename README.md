@@ -1,6 +1,6 @@
 # Affixi
 
-## Affixi is a helper library for Turkish suffixes for nouns and proper nouns.
+## Affixi is a helper library for Turkish suffixes for nouns and proper nouns written in typescript.
 
 ### Legend
 
