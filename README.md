@@ -1,60 +1,99 @@
-# Case Suffixes
-## A helper library for Turkish Case Suffixes for nouns and proper nouns.
+# Affixi
+
+## Affixi is a helper library for Turkish suffixes for nouns and proper nouns.
 
 ### Legend
 
 #### Classes
+
 - CaseSuffix
+
 ```TypeScript
 class CaseSuffix {
     constructor() {}
 }
 ```
 
+- PossessiveSuffix
+
+```TypeScript
+class PossessiveSuffix {
+    constructor() {}
+}
+```
+
+- Word
+
+```TypeScript
+class Word {
+    constructor() {}
+}
+```
+
+- Sound
+
+```TypeScript
+class Sound {
+    constructor() {}
+}
+```
+
 #### Methods
+
 - CaseSuffix
-    - case - sets case of noun
-    ```TypeScript
-    CaseSuffix.case(type: Case): CaseSuffix
-    ```
 
-    - of - returns the noun with suffix
-    ```TypeScript
-    CaseSuffix.of(word: string, isProperNoun: boolean): string
-    ```
+  - case - sets case of noun
 
-    - UnvoicedConsonants - returns the unvoiced consonants of the Turkish Language 
-    ```TypeScript
-    CaseSuffix.UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"]
-    ```
+  ```TypeScript
+  CaseSuffix.case(type: Case): CaseSuffix
+  ```
 
-    - UnroundedVowels - returns the unrounded vowels of the Turkish Language 
-    ```TypeScript
-    CaseSuffix.UnroundedVowels = ["o", "u", "ö", "ü"]
-    ```
+  - of - returns the noun with suffix
 
-    - RoundedVowels - returns the rounded vowels of the Turkish Language 
-    ```TypeScript
-    CaseSuffix.RoundedVowels = ["a", "ı", "e", "i"]
-    ```
+  ```TypeScript
+  CaseSuffix.of(word: string, isProperNoun: boolean): string
+  ```
 
-    - BackVowels - returns the back vowels of the Turkish Language 
-    ```TypeScript
-    CaseSuffix.BackVowels = ["e", "i", "ö", "ü"]
-    ```
+  - UnvoicedConsonants - returns the unvoiced consonants of the Turkish Language
 
-    - FrontVowels - returns the front vowels of the Turkish Language 
-    ```TypeScript
-    CaseSuffix.FrontVowels = ["a", "ı", "o", "u"]
-    ```
+  ```TypeScript
+  CaseSuffix.UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"]
+  ```
 
-    - Vowels - returns the vowels of the Turkish Language 
-    ```TypeScript
-    CaseSuffix.Vowels = ["a", "e", "ı", "i", "o", "ö", "u", "ü"]
-    ```
+  - UnroundedVowels - returns the unrounded vowels of the Turkish Language
+
+  ```TypeScript
+  CaseSuffix.UnroundedVowels = ["o", "u", "ö", "ü"]
+  ```
+
+  - RoundedVowels - returns the rounded vowels of the Turkish Language
+
+  ```TypeScript
+  CaseSuffix.RoundedVowels = ["a", "ı", "e", "i"]
+  ```
+
+  - BackVowels - returns the back vowels of the Turkish Language
+
+  ```TypeScript
+  CaseSuffix.BackVowels = ["e", "i", "ö", "ü"]
+  ```
+
+  - FrontVowels - returns the front vowels of the Turkish Language
+
+  ```TypeScript
+  CaseSuffix.FrontVowels = ["a", "ı", "o", "u"]
+  ```
+
+  - Vowels - returns the vowels of the Turkish Language
+
+  ```TypeScript
+  CaseSuffix.Vowels = ["a", "e", "ı", "i", "o", "ö", "u", "ü"]
+  ```
 
 #### Types
+
 - Case
+
 ```Typescript
 enum Case {
   Absolute,
@@ -67,6 +106,7 @@ enum Case {
 ```
 
 ### Usage
+
 ```TypeScript
 let suffix = new CaseSuffix();
 // With noun
