@@ -317,14 +317,3 @@ namespace Affixi {
     return { possessiveSuffix, caseSuffix, word };
   }
 }
-
-// let p = new Affixi.PossessiveSuffix();
-// let c = new Affixi.CaseSuffix();
-// let r = p.case(Affixi.Types.Pronoun.PluralFirst).of("Aleyh");
-// let r2 = c.case(Affixi.Types.Case.Dative).of(r)
-// console.log(r2);
-
-// let chain = Affixi.chain("Çakmak")
-//   .possessiveSuffix(Affixi.Types.Pronoun.PluralSecond)
-//   .caseSuffix(Affixi.Types.Case.Ablative);
-// console.log(chain.word);
