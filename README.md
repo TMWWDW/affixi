@@ -42,68 +42,125 @@ class Sound {
 
 - CaseSuffix
 
-  - case - sets case of noun
+  - case - sets case of the noun
 
   ```TypeScript
-  CaseSuffix.case(type: Case): CaseSuffix
+  CaseSuffix.case(type: Types.Case): CaseSuffix
   ```
 
   - of - returns the noun with suffix
 
   ```TypeScript
-  CaseSuffix.of(word: string, isProperNoun: boolean): string
+  CaseSuffix.of(word: string, isProperNoun?: boolean): string
   ```
+
+- PossessiveSuffix
+
+  - case - sets pronoun type of the noun
+
+  ```TypeScript
+  PossessiveSuffix.case(pronoun: Types.Pronoun): PossessiveSuffix
+  ```
+
+  - of - returns the noun with suffix
+
+  ```TypeScript
+  PossessiveSuffix.of(word: string, isProperNoun?: boolean): string
+  ```
+
+- Sounds
 
   - UnvoicedConsonants - returns the unvoiced consonants of the Turkish Language
 
   ```TypeScript
-  CaseSuffix.UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"]
+  Sounds.UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"]
+  ```
+
+  - UnvoicedStopConsonants - returns the unvoiced stop consonants of the Turkish Language
+
+  ```TypeScript
+  Sounds.UnvoicedStopConsonants = ["p", "ç", "t", "k"]
+  ```
+
+  - VoicedStopConsonants - returns the voiced consonants of the Turkish Language
+
+  ```TypeScript
+  Sounds.VoicedStopConsonants = ["b", "c", "d", "ğ"]
   ```
 
   - UnroundedVowels - returns the unrounded vowels of the Turkish Language
 
   ```TypeScript
-  CaseSuffix.UnroundedVowels = ["o", "u", "ö", "ü"]
+  Sounds.UnroundedVowels = ["o", "u", "ö", "ü"]
   ```
 
   - RoundedVowels - returns the rounded vowels of the Turkish Language
 
   ```TypeScript
-  CaseSuffix.RoundedVowels = ["a", "ı", "e", "i"]
+  Sounds.RoundedVowels = ["a", "ı", "e", "i"]
   ```
 
   - BackVowels - returns the back vowels of the Turkish Language
 
   ```TypeScript
-  CaseSuffix.BackVowels = ["e", "i", "ö", "ü"]
+  Sounds.BackVowels = ["e", "i", "ö", "ü"]
   ```
 
   - FrontVowels - returns the front vowels of the Turkish Language
 
   ```TypeScript
-  CaseSuffix.FrontVowels = ["a", "ı", "o", "u"]
+  Sounds.FrontVowels = ["a", "ı", "o", "u"]
   ```
 
   - Vowels - returns the vowels of the Turkish Language
 
   ```TypeScript
-  CaseSuffix.Vowels = ["a", "e", "ı", "i", "o", "ö", "u", "ü"]
+  Sounds.Vowels = ["a", "e", "ı", "i", "o", "ö", "u", "ü"]
+  ```
+
+- Word
+
+  - GetLastComponents - returns the last letter and the last vowel of a word
+
+  ```TypeScript
+  Word.GetLastComponents(word: string): { letter: string, vowel: string }
+  ```
+
+  - GetSyllableCount - returns the syllable count of a word
+
+  ```TypeScript
+  Word.GetSyllableCount(word: string): number
   ```
 
 #### Types
 
-- Case
+- Types
 
-```Typescript
-enum Case {
-  Absolute,
-  Accusative,
-  Ablative,
-  Locative,
-  Instrumental,
-  Dative
-}
-```
+  - Case
+
+  ```Typescript
+  enum Case {
+    Absolute,
+    Accusative,
+    Ablative,
+    Locative,
+    Instrumental,
+    Dative
+  }
+  ```
+
+  - Pronoun
+
+  ```Typescript
+  enum Pronoun {
+    SingularFirst,
+    SingularSecond,
+    SingularThird,
+    PluralFirst,
+    PluralSecond,
+    PluralThird
+  }
+  ```
 
 ### Usage
 

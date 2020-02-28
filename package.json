@@ -1,14 +1,16 @@
 {
-  "name": "case-suffixes",
-  "version": "1.0.0",
-  "description": "A helper library for Turkish Case Suffixes for nouns and proper nouns.",
+  "name": "affixi",
+  "version": "0.0.1",
+  "description": "Affixi is a helper library for Turkish suffixes for nouns and proper nouns.",
   "main": "main.js",
   "scripts": {},
   "keywords": [
     "Türkçe",
     "Turkish",
     "Case Suffixes",
-    "Hâl Ekleri"
+    "Possesive Suffixes",
+    "Hâl Ekleri",
+    "İyelik Ekleri"
   ],
   "author": "Muhammed Ali CAN",
   "license": "MIT",
