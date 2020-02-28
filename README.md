@@ -4,137 +4,137 @@
 
 ### Legend
 
+#### Functions
+
+- Affixi.chain
+
+```TypeScript
+Affixi.chain(word: string): Affixi.Chain
+```
+
 #### Classes
 
-- CaseSuffix
+- Affixi.CaseSuffix
 
 ```TypeScript
-class CaseSuffix {
-    constructor() {}
-}
+class CaseSuffix { constructor() {} }
 ```
 
-- PossessiveSuffix
+- Affixi.PossessiveSuffix
 
 ```TypeScript
-class PossessiveSuffix {
-    constructor() {}
-}
+class PossessiveSuffix { constructor() {} }
 ```
 
-- Word
+- Affixi.Word
 
 ```TypeScript
-class Word {
-    constructor() {}
-}
+class Word { /* Static members */ }
 ```
 
-- Sound
+- Affixi.Sound
 
 ```TypeScript
-class Sound {
-    constructor() {}
-}
+class Sound { /* Static members */ }
 ```
 
 #### Methods
 
-- CaseSuffix
+- Affixi.CaseSuffix
 
   - case - sets case of the noun
 
   ```TypeScript
-  CaseSuffix.case(type: Types.Case): CaseSuffix
+  Affixi.CaseSuffix.case(type: Types.Case): CaseSuffix
   ```
 
   - of - returns the noun with suffix
 
   ```TypeScript
-  CaseSuffix.of(word: string, isProperNoun?: boolean): string
+  Affixi.CaseSuffix.of(word: string, isProperNoun?: boolean): string
   ```
 
-- PossessiveSuffix
+- Affixi.PossessiveSuffix
 
   - case - sets pronoun type of the noun
 
   ```TypeScript
-  PossessiveSuffix.case(pronoun: Types.Pronoun): PossessiveSuffix
+  Affixi.PossessiveSuffix.case(pronoun: Types.Pronoun): PossessiveSuffix
   ```
 
   - of - returns the noun with suffix
 
   ```TypeScript
-  PossessiveSuffix.of(word: string, isProperNoun?: boolean): string
+  Affixi.PossessiveSuffix.of(word: string, isProperNoun?: boolean): string
   ```
 
-- Sounds
+- Affixi.Sounds
 
   - UnvoicedConsonants - returns the unvoiced consonants of the Turkish Language
 
   ```TypeScript
-  Sounds.UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"]
+  Affixi.Sounds.UnvoicedConsonants = ["f", "s", "t", "k", "ç", "ş", "h", "p"]
   ```
 
   - UnvoicedStopConsonants - returns the unvoiced stop consonants of the Turkish Language
 
   ```TypeScript
-  Sounds.UnvoicedStopConsonants = ["p", "ç", "t", "k"]
+  Affixi.Sounds.UnvoicedStopConsonants = ["p", "ç", "t", "k"]
   ```
 
   - VoicedStopConsonants - returns the voiced consonants of the Turkish Language
 
   ```TypeScript
-  Sounds.VoicedStopConsonants = ["b", "c", "d", "ğ"]
+  Affixi.Sounds.VoicedStopConsonants = ["b", "c", "d", "ğ"]
   ```
 
   - UnroundedVowels - returns the unrounded vowels of the Turkish Language
 
   ```TypeScript
-  Sounds.UnroundedVowels = ["o", "u", "ö", "ü"]
+  Affixi.Sounds.RoundedVowels = ["o", "u", "ö", "ü"]
   ```
 
   - RoundedVowels - returns the rounded vowels of the Turkish Language
 
   ```TypeScript
-  Sounds.RoundedVowels = ["a", "ı", "e", "i"]
+  Affixi.Sounds.UnroundedVowels = ["a", "ı", "e", "i"]
   ```
 
   - BackVowels - returns the back vowels of the Turkish Language
 
   ```TypeScript
-  Sounds.BackVowels = ["e", "i", "ö", "ü"]
+  Affixi.Sounds.BackVowels = ["e", "i", "ö", "ü"]
   ```
 
   - FrontVowels - returns the front vowels of the Turkish Language
 
   ```TypeScript
-  Sounds.FrontVowels = ["a", "ı", "o", "u"]
+  Affixi.Sounds.FrontVowels = ["a", "ı", "o", "u"]
   ```
 
   - Vowels - returns the vowels of the Turkish Language
 
   ```TypeScript
-  Sounds.Vowels = ["a", "e", "ı", "i", "o", "ö", "u", "ü"]
+  Affixi.Sounds.Vowels = ["a", "e", "ı", "i", "o", "ö", "u", "ü"]
   ```
 
-- Word
+- Affixi.Word
 
   - GetLastComponents - returns the last letter and the last vowel of a word
 
   ```TypeScript
-  Word.GetLastComponents(word: string): { letter: string, vowel: string }
+  Affixi.Word.GetLastComponents(word: string): { letter: string, vowel: string }
   ```
 
   - GetSyllableCount - returns the syllable count of a word
 
   ```TypeScript
-  Word.GetSyllableCount(word: string): number
+  Affixi.Word.GetSyllableCount(word: string): number
   ```
 
 #### Types
 
-- Types
+- Affixi.Types
 
   - Case
 
@@ -162,52 +162,62 @@ class Sound {
   }
   ```
 
+- Affixi.Chain
+
+  ```Typescript
+  interface Chain {
+    possesiveSuffix: (type: Affixi.Types.Pronoun) => Affixi.Chain,
+    caseSuffix: (type: Affixi.Types.Case) => Affixi.Chain,
+    word: string
+  }
+  ```
+
 ### Usage
 
 #### CaseSuffix
 
 ```TypeScript
-let suffix = new CaseSuffix();
+let suffix = new Affixi.CaseSuffix();
 // With noun
 
-suffix.case(Types.Case.Absolute).of("bilgisayar");
+suffix.case(Affixi.Types.Case.Absolute).of("bilgisayar");
 // Returns "bilgisayar"
 
-suffix.case(Types.Case.Accusative).of("bilgisayar");
+suffix.case(Affixi.Types.Case.Accusative).of("bilgisayar");
 // Returns "bilgisayarı"
 
-suffix.case(Types.Case.Ablative).of("bilgisayar");
+suffix.case(Affixi.Types.Case.Ablative).of("bilgisayar");
 // Returns "bilgisayardan"
 
-suffix.case(Types.Case.Locative).of("bilgisayar");
+suffix.case(Affixi.Types.Case.Locative).of("bilgisayar");
 // Returns "bilgisayarda"
 
-suffix.case(Types.Case.Instrumental).of("bilgisayar");
+suffix.case(Affixi.Types.Case.Instrumental).of("bilgisayar");
 // Returns "bilgisayarla"
 
-suffix.case(Types.Case.Dative).of("bilgisayar");
+suffix.case(Affixi.Types.Case.Dative).of("bilgisayar");
 // Returns "bilgisayara"
 
 
 
 // With proper noun
 
-suffix.case(Types.Case.Absolute).of("Ali", true);
+suffix.case(Affixi.Types.Case.Absolute).of("Ali", true);
 // Returns "Ali"
 
-suffix.case(Types.Case.Accusative).of("Ali", true);
+suffix.case(Affixi.Types.Case.Accusative).of("Ali", true);
 // Returns "Ali'yi"
 
-suffix.case(Types.Case.Ablative).of("Ali", true);
+suffix.case(Affixi.Types.Case.Ablative).of("Ali", true);
 // Returns "Ali'den"
 
-suffix.case(Types.Case.Locative).of("Ali", true);
+suffix.case(Affixi.Types.Case.Locative).of("Ali", true);
 // Returns "Ali'de"
 
-suffix.case(Types.Case.Instrumental).of("Ali", true);
+suffix.case(Affixi.Types.Case.Instrumental).of("Ali", true);
 // Returns "Ali'yle"
 
-suffix.case(Types.Case.Dative).of("Ali", true);
+suffix.case(Affixi.Types.Case.Dative).of("Ali", true);
 // Returns "Ali'ye"
 
 ```
@@ -215,47 +225,41 @@ suffix.case(Types.Case.Dative).of("Ali", true);
 #### PossessiveSuffix
 
 ```TypeScript
-let suffix = new PossessiveSuffix();
+let suffix = new Affixi.PossessiveSuffix();
 // With noun
 
-suffix.case(Types.Pronoun.SingularFirst).of("çakmak");
+suffix.case(Affixi.Types.Pronoun.SingularFirst).of("çakmak");
 // Returns "çakmağım"
 
-suffix.case(Types.Pronoun.SingularSecond).of("çakmak");
+suffix.case(Affixi.Types.Pronoun.SingularSecond).of("çakmak");
 // Returns "çakmağın"
 
-suffix.case(Types.Pronoun.SingularThird).of("çakmak");
+suffix.case(Affixi.Types.Pronoun.SingularThird).of("çakmak");
 // Returns "çakmağı"
 
-suffix.case(Types.Pronoun.PluralFirst).of("çakmak");
+suffix.case(Affixi.Types.Pronoun.PluralFirst).of("çakmak");
 // Returns "çakmağımız"
 
-suffix.case(Types.Pronoun.PluralSecond).of("çakmak");
+suffix.case(Affixi.Types.Pronoun.PluralSecond).of("çakmak");
 // Returns "çakmağınız"
 
-suffix.case(Types.Pronoun.PluralThird).of("çakmak");
+suffix.case(Affixi.Types.Pronoun.PluralThird).of("çakmak");
 // Returns "çakmakları"
+```
 
+##### Chaining
 
+```TypeScript
+let chain = Affixi.chain("Aleyh")
+  .possessiveSuffix(Affixi.Types.Pronoun.PluralFirst)
+  .caseSuffix(Affixi.Types.Case.Dative)
 
-// With proper noun
+console.log(chain.word);
+// Logs "Aleyhimize"
 
-suffix.case(Types.Case.Absolute).of("Ali", true);
-// Returns "Ali"
-
-suffix.case(Types.Case.Accusative).of("Ali", true);
-// Returns "Ali'yi"
-
-suffix.case(Types.Case.Ablative).of("Ali", true);
-// Returns "Ali'den"
-
-suffix.case(Types.Case.Locative).of("Ali", true);
-// Returns "Ali'de"
-
-suffix.case(Types.Case.Instrumental).of("Ali", true);
-// Returns "Ali'yle"
-
-suffix.case(Types.Case.Dative).of("Ali", true);
-// Returns "Ali'ye"
-
+let chain = Affixi.chain("Çakmak")
+  .possessiveSuffix(Affixi.Types.Pronoun.PluralSecond)
+  .caseSuffix(Affixi.Types.Case.Ablative);
+console.log(chain.word);
+// Logs "Çakmağınızdan"
 ```
