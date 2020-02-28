@@ -164,48 +164,98 @@ class Sound {
 
 ### Usage
 
+#### CaseSuffix
+
 ```TypeScript
 let suffix = new CaseSuffix();
 // With noun
 
-suffix.case(Case.Absolute).of("bilgisayar");
+suffix.case(Types.Case.Absolute).of("bilgisayar");
 // Returns "bilgisayar"
 
-suffix.case(Case.Accusative).of("bilgisayar");
+suffix.case(Types.Case.Accusative).of("bilgisayar");
 // Returns "bilgisayarı"
 
-suffix.case(Case.Ablative).of("bilgisayar");
+suffix.case(Types.Case.Ablative).of("bilgisayar");
 // Returns "bilgisayardan"
 
-suffix.case(Case.Locative).of("bilgisayar");
+suffix.case(Types.Case.Locative).of("bilgisayar");
 // Returns "bilgisayarda"
 
-suffix.case(Case.Instrumental).of("bilgisayar");
+suffix.case(Types.Case.Instrumental).of("bilgisayar");
 // Returns "bilgisayarla"
 
-suffix.case(Case.Dative).of("bilgisayar");
+suffix.case(Types.Case.Dative).of("bilgisayar");
 // Returns "bilgisayara"
 
 
 
 // With proper noun
 
-suffix.case(Case.Absolute).of("Ali", true);
+suffix.case(Types.Case.Absolute).of("Ali", true);
 // Returns "Ali"
 
-suffix.case(Case.Accusative).of("Ali", true);
+suffix.case(Types.Case.Accusative).of("Ali", true);
 // Returns "Ali'yi"
 
-suffix.case(Case.Ablative).of("Ali", true);
+suffix.case(Types.Case.Ablative).of("Ali", true);
 // Returns "Ali'den"
 
-suffix.case(Case.Locative).of("Ali", true);
+suffix.case(Types.Case.Locative).of("Ali", true);
 // Returns "Ali'de"
 
-suffix.case(Case.Instrumental).of("Ali", true);
+suffix.case(Types.Case.Instrumental).of("Ali", true);
 // Returns "Ali'yle"
 
-suffix.case(Case.Dative).of("Ali", true);
+suffix.case(Types.Case.Dative).of("Ali", true);
+// Returns "Ali'ye"
+
+```
+
+#### PossessiveSuffix
+
+```TypeScript
+let suffix = new PossessiveSuffix();
+// With noun
+
+suffix.case(Types.Pronoun.SingularFirst).of("çakmak");
+// Returns "çakmağım"
+
+suffix.case(Types.Pronoun.SingularSecond).of("çakmak");
+// Returns "çakmağın"
+
+suffix.case(Types.Pronoun.SingularThird).of("çakmak");
+// Returns "çakmağı"
+
+suffix.case(Types.Pronoun.PluralFirst).of("çakmak");
+// Returns "çakmağımız"
+
+suffix.case(Types.Pronoun.PluralSecond).of("çakmak");
+// Returns "çakmağınız"
+
+suffix.case(Types.Pronoun.PluralThird).of("çakmak");
+// Returns "çakmakları"
+
+
+
+// With proper noun
+
+suffix.case(Types.Case.Absolute).of("Ali", true);
+// Returns "Ali"
+
+suffix.case(Types.Case.Accusative).of("Ali", true);
+// Returns "Ali'yi"
+
+suffix.case(Types.Case.Ablative).of("Ali", true);
+// Returns "Ali'den"
+
+suffix.case(Types.Case.Locative).of("Ali", true);
+// Returns "Ali'de"
+
+suffix.case(Types.Case.Instrumental).of("Ali", true);
+// Returns "Ali'yle"
+
+suffix.case(Types.Case.Dative).of("Ali", true);
 // Returns "Ali'ye"
 
 ```
