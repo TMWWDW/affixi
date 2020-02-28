@@ -247,17 +247,17 @@ suffix.case(Affixi.Types.Pronoun.PluralThird).of("çakmak");
 // Returns "çakmakları"
 ```
 
-##### Chaining
+#### Chaining
 
 ```TypeScript
-let chain = Affixi.chain("Aleyh")
+var chain = Affixi.chain("Aleyh")
   .possessiveSuffix(Affixi.Types.Pronoun.PluralFirst)
   .caseSuffix(Affixi.Types.Case.Dative)
 
 console.log(chain.word);
 // Logs "Aleyhimize"
 
-let chain = Affixi.chain("Çakmak")
+var chain = Affixi.chain("Çakmak")
   .possessiveSuffix(Affixi.Types.Pronoun.PluralSecond)
   .caseSuffix(Affixi.Types.Case.Ablative);
 console.log(chain.word);
