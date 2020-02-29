@@ -317,3 +317,5 @@ namespace Affixi {
     return { possessiveSuffix, caseSuffix, word };
   }
 }
+
+export default Affixi
