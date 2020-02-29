@@ -9,7 +9,7 @@
 - Affixi.chain
 
 ```TypeScript
-Affixi.chain(word: string): Affixi.Chain
+Affixi.chain(word: string, isProperNoun?: boolean): Affixi.Chain
 ```
 
 #### Classes

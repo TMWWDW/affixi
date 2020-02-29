@@ -43,6 +43,16 @@ namespace Affixi {
     static BackVowels = ["e", "i", "ö", "ü"];
     static FrontVowels = ["a", "ı", "o", "u"];
     static Vowels = [...Sounds.FrontVowels, ...Sounds.BackVowels];
+    static UnvoicedExceptions = [
+      "hukuk",
+      "bilet",
+      "tabiat",
+      "devlet",
+      "bisiklet",
+      "millet",
+      "ahret",
+      "ahiret"
+    ];
   }
 
   export class Word {
@@ -71,31 +81,14 @@ namespace Affixi {
 
       return count;
     }
-  }
 
-  export class PossessiveSuffix {
-    pronoun: Types.Pronoun;
-    constructor() {
-      this.pronoun = Types.Pronoun.SingularFirst;
-    }
-
-    case(pronoun: Types.Pronoun): PossessiveSuffix {
-      this.pronoun = pronoun;
-      return this;
-    }
-
-    of(word: string, isProperNoun = false): string {
-      let result = "";
-      let suffix = "";
-      if (isProperNoun) suffix += "'";
-
-      suffix += this.suffix(word);
-
+    static AlterToVoicedCounterPart(word: string, isProperNoun: boolean) {
       let { letter } = Word.GetLastComponents(word);
       if (
         Word.GetSyllableCount(word) > 1 &&
         Sounds.UnvoicedStopConsonants.includes(letter) &&
-        this.pronoun !== Types.Pronoun.PluralThird
+        !isProperNoun &&
+        !Sounds.UnvoicedExceptions.includes(word.toLowerCase())
       ) {
         let i = Sounds.UnvoicedStopConsonants.indexOf(word[word.length - 1]);
         let voicedCounterPart;
@@ -116,6 +109,31 @@ namespace Affixi {
             .splice(0, word.length - 1)
             .join("") + voicedCounterPart;
       }
+      return word;
+    }
+  }
+
+  export class PossessiveSuffix {
+    pronoun: Types.Pronoun;
+    constructor() {
+      this.pronoun = Types.Pronoun.SingularFirst;
+    }
+
+    case(pronoun: Types.Pronoun): PossessiveSuffix {
+      this.pronoun = pronoun;
+      return this;
+    }
+
+    of(word: string, isProperNoun = false): string {
+      let result = "";
+      let suffix = "";
+      if (isProperNoun) suffix += "'";
+
+      suffix += this.suffix(word);
+
+      if (this.pronoun !== Types.Pronoun.PluralThird) {
+        word = Word.AlterToVoicedCounterPart(word, isProperNoun);
+      }
       result = word + suffix;
 
       return result;
@@ -127,9 +145,17 @@ namespace Affixi {
 
       if (!Sounds.Vowels.includes(letter) && this.pronoun !== Types.Pronoun.PluralThird) {
         if (Sounds.FrontVowels.includes(vowel)) {
-          suffix += "ı";
+          if (Sounds.RoundedVowels.includes(vowel)) {
+            suffix += "u";
+          } else {
+            suffix += "ı";
+          }
         } else if (Sounds.BackVowels.includes(vowel)) {
-          suffix += "i";
+          if (Sounds.RoundedVowels.includes(vowel)) {
+            suffix += "ü";
+          } else {
+            suffix += "i";
+          }
         }
       }
 
@@ -152,16 +178,32 @@ namespace Affixi {
           break;
         case 3:
           if (Sounds.FrontVowels.includes(vowel)) {
-            suffix += "mız";
+            if (Sounds.RoundedVowels.includes(vowel)) {
+              suffix += "muz";
+            } else {
+              suffix += "mız";
+            }
           } else if (Sounds.BackVowels.includes(vowel)) {
-            suffix += "miz";
+            if (Sounds.RoundedVowels.includes(vowel)) {
+              suffix += "müz";
+            } else {
+              suffix += "miz";
+            }
           }
           break;
         case 4:
           if (Sounds.FrontVowels.includes(vowel)) {
-            suffix += "nız";
+            if (Sounds.RoundedVowels.includes(vowel)) {
+              suffix += "nuz";
+            } else {
+              suffix += "nız";
+            }
           } else if (Sounds.BackVowels.includes(vowel)) {
-            suffix += "niz";
+            if (Sounds.RoundedVowels.includes(vowel)) {
+              suffix += "nüz";
+            } else {
+              suffix += "niz";
+            }
           }
           break;
         case 5:
@@ -197,6 +239,8 @@ namespace Affixi {
           result = this.absolute(word);
           break;
         case Types.Case.Accusative:
+          word = Word.AlterToVoicedCounterPart(word, isProperNoun);
+
           suffix += this.accusative(word);
           result = word + suffix;
           break;
@@ -213,6 +257,8 @@ namespace Affixi {
           result = word + suffix;
           break;
         case Types.Case.Dative:
+          word = Word.AlterToVoicedCounterPart(word, isProperNoun);
+
           suffix += this.dative(word);
           result = word + suffix;
           break;
@@ -301,16 +347,16 @@ namespace Affixi {
     word: string;
   }
 
-  export function chain(word: string): Chain {
-    let possessive = new PossessiveSuffix();
-    let _case = new CaseSuffix();
-
+  export function chain(word: string, isProperNoun = false): Chain {
+    if(isProperNoun) word += "'"
     let possessiveSuffix = (type: Types.Pronoun): Chain => {
+      let possessive = new PossessiveSuffix();
       word = possessive.case(type).of(word);
       return { possessiveSuffix, caseSuffix, word };
     };
 
     let caseSuffix = (type: Types.Case): Chain => {
+      let _case = new CaseSuffix();
       word = _case.case(type).of(word);
       return { possessiveSuffix, caseSuffix, word };
     };
@@ -318,4 +364,4 @@ namespace Affixi {
   }
 }
 
-export default Affixi
+export default Affixi;
