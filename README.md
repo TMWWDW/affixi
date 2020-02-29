@@ -132,6 +132,12 @@ class Sound { /* Static members */ }
   Affixi.Word.GetSyllableCount(word: string): number
   ```
 
+  - AlterToVoicedCounterPart - alters the given word's last letter to its voiced counterpart if necassary e.g: "Kağıt" => "Kağıd", "Top" => "Top", "Ahenk" => "Aheng", "Kapak" => "Kapağ", "Devlet" => "Devlet"
+
+  ```TypeScript
+  Affixi.Word.GetSyllableCount(word: string, isProperNoun: boolean): string
+  ```
+
 #### Types
 
 - Affixi.Types
